@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/furore" rel="stylesheet">
+  <title>WB Тест для Юли</title>
+</head>
+<body>
+<audio id="correctSound" src="sounds/correct.mp3" preload="auto"></audio>
+<audio id="wrongSound" src="sounds/wrong.mp3" preload="auto"></audio>
+<audio id="confirmSound" src="sounds/confirm.mp3" preload="auto"></audio>
+<audio id="checkCorrect" src="sounds/checkcorrect.mp3" preload="auto"></audio>
+<audio id="omg" src="sounds/omg.mp3" preload="auto"></audio>
+
+  <div class="modal" id="introModal" style="display: flex;">
+  <div class="modal-content intro-box">
+    <div class="intro-grid">
+      <div class="intro-text">
+        <h2>Привет, Юля!</h2>
+        <p>Ты попала на рофельный тест — <strong>насколько ты крутой сотрудник WB</strong></p>
+        <picture>
+  <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.webp" type="image/webp">
+  <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif" alt="😎" width="128" height="128">
+</picture>
+        <p>Отвечаешь на вопросы,<br> угараешь, <br> кринжуешь. <br> <b>Всё просто.</b></p>
+        <button class="answer" onclick="closeIntro()">Ок, погнали</button>
+        <button class="answer" onclick="closeIntro()">Ничего не понял, но очень интересно</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="modal" id="warningModal" style="display: none;">
+    <div class="modal-content" id="quizStep">
+      <p class="confirm-ques">Если ты не Юля — тогда Наталия морская пехота сейчас начнёт стрелять! Если ты <strong>Юля</strong>, то ответь на потверждающий вопрос:</p>
+      <p class="secure-ques">Как зовут твоих коллег по работе?</p>
+      <button class="answer" onclick="checkAnswer(1)">Маша, Настя, Катя</button>
+      <button class="answer" onclick="checkAnswer(2)">Маша, Катя, Хабиб Нурмагомедов, Макан</button>
+      <button class="answer" onclick="checkAnswer(3)">Хасбик, Абдурозик, Надежда Кадышева, Конор Мак нагетс</button>
+    </div>
+    <div class="modal-content hidden" id="failStep">
+      <p class="fail-confirm">Ты походу не Юля</p>
+      <img src="img/not-julia.jpg" alt="Проверка провалена" class="fail">
+
+      <button class="answer" onclick="location.reload()">Заново</button>
+    </div>
+  </div>
+
+  <div class="quiz-container">
+<div class="card active" id="q1">
+  <div class="question"><p class="question-text">1. Какой адрес у твоего пункта?</p></div>
+  <img src="img/q1.jpg" alt="Картинка к вопросу" class="question-img">
+  <button class="answer" onclick="checkQuizAnswer(1, false)">Республика Дагестан, Махачкала, ул. Кальянная, д 95.</button>
+  <button class="answer" onclick="checkQuizAnswer(1, false)">170 Ludlow St, New York, NY 10002, USA</button>
+  <button class="answer" onclick="checkQuizAnswer(1, true)">Беларусь, Мегаполис Боровляны, ул. Победы д. 23А</button>
+  <button class="answer" onclick="checkQuizAnswer(1, false)">Беларусь, деревня Минск, ул. Зыбицкая д. 1</button>
+</div>
+
+<div class="card" id="q2">
+  <div class="question"><p class="question-text">2. Что ты отвечаешь клиентам когда они спрашивают: "Как так, почему оплата не прошла?"</p></div>
+  <img src="img/q2.jpg" alt="Картинка к вопросу" class="question-img">
+  <button class="answer" onclick="checkQuizAnswer(2, false)">Да мне просто нехер делать, вот и решила наебать.</button>
+  <button class="answer" onclick="checkQuizAnswer(2, false)">Ну а чё ты всю пенсию потратила?</button>
+  <button class="answer" onclick="checkQuizAnswer(2, true)">Проверьте пожалуйста баланс привязанной карты.</button>
+  <button class="answer" onclick="checkQuizAnswer(2, false)">Бля, у меня довоз тут, а ты мне тут ещё со своей картой ебёшь голову. </button>
+</div>
+
+<div class="card" id="q3">
+  <div class="question"><p class="question-text">3. Клиент пришёл за заказом в 8:49 утра в понедельник. Что ты ему скажешь?</p></div>
+  <img src="img/q3.webp" alt="Картинка к вопросу" class="question-img">
+  <button class="answer" onclick="checkQuizAnswer(3, false)">Ты шо ебанутый, шо ты тут делаешь?</button>
+  <button class="answer" onclick="checkQuizAnswer(3, false)">Вы кто такие я вас не звал</button>
+  <button class="answer" onclick="checkQuizAnswer(3, false)">Бля, ты бы ещё в 5 утра пришёл бы.</button>
+  <button class="answer" onclick="checkQuizAnswer(3, true)">Извините, мы работаем с 10 утра. </button>
+</div>
+
+<div class="card" id="q4">
+  <div class="question"><p class="question-text">4. Твоя смена заканчивается через 2 минуты 23 секунды, но тут приезжает довоз. Что ты думаешь?</p></div>
+  <img src="img/okak.jpg" alt="Картинка к вопросу" class="question-img">
+  <button class="answer" onclick="checkQuizAnswer(4, false)">Ты шо ебанутый, шо ты тут делаешь?</button>
+  <button class="answer" onclick="checkQuizAnswer(4, false)">Вы кто такие я вас не звал</button>
+  <button class="answer" onclick="checkQuizAnswer(4, false)">Бля, как вы заебали со своими довозами (100% вот это)</button>
+  <button class="answer" onclick="checkQuizAnswer(4, true)">Ща быстренко приму товар, и домой. </button>
+</div>
+
+<div class="card" id="q5">
+  <div class="question"><p class="question-text">5. Клиент приходит с вопросом: "Я у вас заказывал набор отвёрток, он уже приехал?" Твой ответ:</p> </div>
+  <img src="img/q5.webp" alt="Картинка к вопросу" class="question-img">
+  <button class="answer" onclick="checkQuizAnswer(5, false)">Ща я весь склад проверю, подождите 3 недели.</button>
+  <button class="answer" onclick="checkQuizAnswer(5, false)">Я щас тебе набор таблеток вынесу</button>
+  <button class="answer" onclick="checkQuizAnswer(5, true)">Проверьте статус заказа в приложении.</button>
+  <button class="answer" onclick="checkQuizAnswer(5, false)">Нет, только набор с запасным ебалом приехал.</button>
+</div>
+
+<div class="card" id="q6">
+  <div class="question"><p class="question-text">Ну и последний вопрос: Насколько крутой был тест?</p></div>
+  <img src="img/q6.jpg" alt="Картинка к вопросу" class="question-img">
+  <button class="answer" onclick="checkQuizAnswer(6, true)">Ну так.</button>
+  <button class="answer" onclick="checkQuizAnswer(6, true)">А что, больше вопросов не будет?</button>
+  <button class="answer" onclick="checkQuizAnswer(6, true)">На 12 из 10.</button>
+
+</div>
+<div class="card" id="result">
+  <div class="question">
+    <p class="result-text">Юля, я оцениваю тебя на <span class="animated-number">100</span> шк из 100</p>
+    <p class="bonus-question">Опа, а теперь бонусный вопрос: Погнали по кофе? </p>
+    <img src="img/cat_drink.png" alt="Картинка к вопросу" class="result-img">
+    <button class="result-button" onclick="goToTelegram()">Go</button>
+    <button class="result-button" onclick="goToTelegram()">Гоу</button>
+    <button class="result-button" onclick="goToTelegram()">окак, ну го</button>
+  </div>
+</div>
+  <script src="js/intro_js.js"></script>
+  <script src="js/check_q.js"></script>
+  <script src="js/telegram.js"></script>
+</body>
+</html>
